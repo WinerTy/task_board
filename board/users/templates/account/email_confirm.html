@@ -1,0 +1,29 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% load i18n %}
+{% load account %}
+{% load allauth %}
+{% block lc %}
+<title>Подтверждение</title>
+    {% if confirmation %}
+        {% user_display confirmation.email_address.user as user_display %}
+        {% if can_confirm %}
+            <p>{% blocktrans with confirmation.email_address.email as email %} Пожалуйста подтвердите свою почту - <a href="mailto:{{ email }}">{{ email }}</a>.{% endblocktrans %}
+            </p>
+            {% url 'account_confirm_email' confirmation.key as action_url %}
+            <form method="post" action="{{ action_url }}">
+                {% csrf_token %}
+                <button type="submit">Подтвердить</button>
+            </form>
+        {% else %}
+            <p>
+                {% blocktrans %}Неудалось подтвердить {{ email }} потому что почта уже подтверждена для другого аккаунта.{% endblocktrans %}
+            </p>
+        {% endif %}
+    {% else %}
+        {% url 'account_email' as email_url %}
+        <p>
+            {% blocktrans %}Ссылка для подтверждения почты не действительна или была использована <a href="{{ email_url }}">вы можете запросить новую ссылку</a>.{% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock %}

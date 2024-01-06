@@ -1,0 +1,21 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/styles.html' %}
+
+{% block post %}
+    <title>Объявления</title>
+{% if user.is_authenticated %}
+    <div class="all container">
+       <form method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+            <div class="form-group">
+                {{ data.as_div }}
+            </div>
+            <button type="submit" class="btn btn-success"> Опубликовать </button>
+       </form>
+    </div>
+{% else %}
+    <div class="login-required">
+        <p>Для создания объявления необходимо <a href="{% url 'account_login' %}">войти </a>в аккаунт!</p>
+    </div>
+{% endif %}
+{% endblock %}

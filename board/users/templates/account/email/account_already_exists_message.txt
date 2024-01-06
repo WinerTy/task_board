@@ -1,0 +1,11 @@
+{% extends "account/email/base_message.txt" %}
+{% load i18n %}
+
+{% block content %}{% autoescape off %}{% blocktrans %}Вы получи данное письмо, потому что эту почту указали при регистрации на сайте MMORPG.com!
+
+
+Аккаунт с такой почтой уже зарегестрирован. Вы можете войти в него на нашем сайте MMORPG.com!
+Если вы забыли пароль, то вы можете его восстановить перейдя по ссылке:
+
+
+{{ password_reset_url }}{% endblocktrans %}{% endautoescape %}{% endblock content %}
