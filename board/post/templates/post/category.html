@@ -1,0 +1,14 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% load static %}
+{% block post %}
+<title>Категории</title>
+<link rel="stylesheet" href="{% static 'css/all_category.css' %}" />
+<div class="category-container container">
+    {% for category, image in category_images.items %}
+            <a href="#" class="category-item" style="background-image: url('{{ image }}');">
+                <h2 class="category-item__name">{{ category }}</h2>
+            </a>
+    {% endfor %}
+ </div>
+{% endblock %};

@@ -1,0 +1,52 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/styles.html' %}
+{% load static %}
+{% block lc %}
+
+<title>Управление заявками</title>
+<form  method="GET" action="{% url 'candidates_sort' %}?next={{ request.path }}">
+    <input class="four-group" type="search" name="Find_id" placeholder="Поиск по id">
+    <input class="four-group" type="search" name="Find_title" placeholder="Поиск по названию">
+    <button class="btn btn-primary" type="submit">Поиск</button>
+</form>
+<a class="btn btn-primary" href = "{% url 'candidates' %}">Сброс фильров</a>
+{% if data.error %}
+    <div class="alert alert-danger" role="alert">
+        <p>При поиске произошла ошибка</p>
+    </div>
+{% endif %}
+
+{% if data %}
+    {% for post_id, post_data in data.items %}
+        <div class="container">
+            <h2><a href="{% url 'post_info' post_id %}">{{ post_data.title|truncatewords:4 }}</a> - ID:{{ post_id }}</h2>
+                {% if post_data.responses.count == 0 %}
+                    <p>Откликов нет</p>
+                {% else %}
+                    <p>Откликов: {{ post_data.responses.count }}</p>
+                {% endif %}
+            <ul>
+                {% for response in post_data.responses %}
+                    <p>
+                        {{ response.user }} - {{ response.status }}
+                        <form method="post" action="{% url 'accept_response' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="response_id" value="{{ response.id }}">
+                            <button type="submit">Принять</button>
+                        </form>
+                        <form method="post" action="{% url 'reject_response' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="response_id" value="{{ response.id }}">
+                            <button type="submit">Отклонить</button>
+                        </form>
+                    </p>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="container">
+        <h2>Публикации не найдены :(</h2>
+    </div>
+{% endif %}
+{% endblock %}

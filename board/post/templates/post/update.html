@@ -1,0 +1,14 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% block post %}
+<title>Редактирование</title>
+    <div class="all">
+       <form method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p}}
+            </div>
+            <button type="submit" class="btn btn-success"> Изменить </button>
+       </form>
+    </div>
+{% endblock %}

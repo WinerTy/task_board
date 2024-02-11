@@ -1,0 +1,36 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% block lc %}
+<title>Регистрация</title>
+<div class="info">
+  <p>Если у вас уже есть аккаунт, то вы можете <a href="{% url 'account_login' %}">войти</a> в него.</p>
+</div>
+<form method="post">
+              {% csrf_token %}
+                <div class="form-all">
+                  {{ form.username }}
+                  <label class="form-label">Имя пользователя</label>
+                </div>
+
+                <!-- Email input -->
+                <div class="form-all">
+                  {{ form.email }}
+                  <label class="form-label">Адрес эл.почты</label>
+                </div>
+
+                <!-- Password input 1 -->
+                <div class="form-all">
+                  {{ form.password1 }}
+                  <label class="form-label">Пароль</label>
+                </div>
+
+                <!-- Password input 2 -->
+                <div class="form-all">
+                  {{ form.password2 }}
+                  <label class="form-label">Повторите пароль</label>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit" class="btn btn-primary btn-lg">Зарегестрироваться</button>
+                </div>
+</form>
+{% endblock %}

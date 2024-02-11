@@ -1,0 +1,12 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% block lc %}
+    <title>Личный кабинет</title>
+<div class="info-user container">
+    <h1>Личный кабинет: {{ user.username }}</h1>
+</div>
+<a class="btn btn-primary" href="{% url 'candidates' %}">Список заявок</a>
+<div class="btn-toolbar">
+    <a class= "btn btn-primary" href="{% url 'account_logout' %}">Выход</a>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load static %}
+<section class="intro-section">
+	<div class="container">
+		<div class="row">
+			{% if latest_posts %}
+				{% for data in latest_posts %}
+					<div class="col-md-4">
+						<div class="intro-text-box text-box text-white">
+							<div class="top-meta">{{ data.created_at|date:"j F Y" }} / Раздел <a href="">{{ data.category }}</a></div>
+							<h3>{{ data.title|truncatewords:5 }}</h3>
+							<p>{{ data.text|truncatewords:15 }}</p>
+							<a href="{% url 'post_info' data.id %}" class="read-more">Подробнее<img src="{% static 'icon/double-arrow.png' %}" alt="#"/></a>
+						</div>
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="col-md-4">
+					<div class="intro-text-box text-box text-white">
+						<p>Сейчас нет записей вы можете <a href="{% url 'create' %}">Создать</a> ее.</p>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

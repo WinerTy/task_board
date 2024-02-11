@@ -1,0 +1,9 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% block post %}
+<title>Удаление публикации</title>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success"> Подтвердить удаление</button>
+</form>
+{% endblock %}
