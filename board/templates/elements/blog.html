@@ -1,0 +1,17 @@
+{% load static %}
+<div class="blog-item">
+    {% if slice_posts %}
+        {% for data in slice_posts %}
+            <div class="blog-text text-box text-white">
+                <div class="top-meta">{{ data.created_at|date:"j F Y" }}  /  Раздел <a href="">{{ data.category }}</a></div>
+                <h3>{{ data.title|truncatewords:5 }}</h3>
+                <p>{{ data.text|truncatewords:20 }}</p>
+                <a href="{% url 'post_info' data.id %}" class="read-more">Подробнее  <img src="{% static 'icon/double-arrow.png' %}" alt="#"/></a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="blog-text text-box text-white">
+            <p>Сейчас нет записей вы можете <a href="{% url 'create' %}">Создать</a> ее.</p>
+        </div>
+    {% endif %}
+</div>

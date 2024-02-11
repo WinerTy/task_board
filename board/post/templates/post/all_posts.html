@@ -1,0 +1,39 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% load static %}
+{% block post %}
+<link rel="stylesheet" href="{% static 'css/all_posts.scss' %}">
+<title>Все объявления</title>
+  <div class="all container">
+    {% for post in posts %}
+      <div class="post-main">
+        <a href="{% url 'post_info' post.id %}" class="post">
+          <div class="post-info">
+              <h2>{{ post.title|truncatewords:5 }}</h2>
+              <p>Было опубликовано: {{ post.created_at|date:"j F, Y" }} | {{ post.author }}</p>
+          </div>
+            <div class="post-content">
+                <p><span class="bold">Категория</span>: {{ post.category }}</p>
+                <p>{{ post.text|truncatewords:5 }}</p>
+            </div>
+          {% if post.title_image %}
+          <div class="img-title">
+            <img src="{{ post.title_image.url }}">
+          </div>
+          {% endif %}
+      </a>
+        <div class="response">
+          <button class="btn btn-primary" href="#">Откликнуться</button>
+      </div>
+      </div>
+
+    {% endfor %}
+
+      {% if posts.has_next %}
+        <button class="btn btn-primary">
+            <a href="{% url 'all_posts' %}?page={{ posts.next_page_number}}">Далее...</a>
+        </button>
+    {% endif %}
+  </div>
+
+{% endblock %}

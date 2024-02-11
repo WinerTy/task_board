@@ -1,0 +1,10 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/style.html' %}
+{% block lc %}
+<title>Авторизация</title>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit">Войти</button>
+</form>
+{% endblock %}

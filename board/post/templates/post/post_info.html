@@ -1,0 +1,58 @@
+{% extends 'elements/header.html' %}
+{% include 'elements/styles.html' %}
+{% load static %}
+{% block lc %}
+<title>{{ post.title|truncatewords:2 }}</title>
+<link rel="stylesheet" href="{% static 'css/post_detail.css' %}">
+<div class="all container">
+    <div class="left">
+
+        <div class="img-title">
+            {% if post.title_image %}
+                <img src="{{ post.title_image.url }}">
+            {% endif %}
+            <div class="img-title__text">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.category }}</p>
+            </div>
+        </div>
+
+        <div class="text-image">
+            <p>{{ post.text }}</p>
+            {% if post.text_image %}
+                <img src="{{ post.text_image.url }}">
+            {% endif %}
+        </div>
+
+        <p>Было опубликовано: {{ post.created_at|date:"j F, Y" }} | {{ post.author }}</p>
+
+        {% if post.author == request.user %}
+            <div class="btn-edit">
+                <a class="btn btn-primary" href="{% url 'update_post' post.id %}">Редактировать</a>
+                <a class="btn btn-primary" href="{% url 'delete_post' post.id %}">Удалить</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="right">
+        {% if user.is_authenticated %}
+            {% if post.author != request.user %}
+                {% if response_list %}
+                    <p>Вы уже откликнулись на данный пост<br>Статус вашей заявки - {% for info in response_list %}{{ info.status }}{% endfor %}</p>
+                {% else %}
+                    <form class="response-form" method="GET" action="{% url 'response' post.id %}">
+                        {% csrf_token %}
+                        {{ form.as_div }}
+                        <button class="btn btn-primary" type="submit">Откликнутся</button>
+                    </form>
+                {% endif %}
+            {% else %}
+                <h5>Вы являетесь автором данного поста.<br>Список всех заявок можно посмотреть <a href="{% url 'candidates' %}">тут</a>!</h5>
+            {% endif %}
+        {% else %}
+            <h5>Для откликов на пост необходимо </h5><a class="btn btn-primary" href="{% url 'account_login' %}">авторизоваться</a>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

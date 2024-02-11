@@ -1,0 +1,7 @@
+{% extends 'elements/header.html'%}
+{% include 'elements/style.html' %}
+{% block lc %}
+  <h2>Подтверждение регистрации</h2>
+  <p>Пожалуйста, подтвердите вашу регистрацию, перейдя по ссылке ниже:</p>
+  <p><a href="{{ activation_url }}">Подтвердить регистрацию</a></p>
+{% endblock %}
